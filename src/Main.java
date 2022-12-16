@@ -39,8 +39,8 @@ public class Main {
                 }else{
                     Connection connection = connect();
                     try{//Try connecting to the database and retrieving user data
-                        Statement stmt = connection.createStatement();
-                        String st = "SELECT * FROM USERS WHERE USERNAME='"+username+"' AND PASSWORD = '"+password+"'";
+                        Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+                        String st = "SELECT * FROM MYDB.USERS WHERE USERNAME='"+username+"' AND PASSWORD = '"+password+"'";
                         ResultSet rs=stmt.executeQuery(st);
                         if (!rs.next()){
                             System.out.println("No such user!");
@@ -82,7 +82,15 @@ public class Main {
 
 
     }
-    public static Connection connect(){
-            return null;
+    public static Connection connect() {
+        Connection connection = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/mysql?user=root&password=devrootpassword");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(connection);
+        return connection;
     }
 }
