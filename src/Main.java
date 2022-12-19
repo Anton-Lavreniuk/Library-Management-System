@@ -166,6 +166,97 @@ public class Main {
     }
 
     public static void admin_menu(){
+        JFrame f = new JFrame();
+        JButton view_but = new JButton("View books");
+        view_but.setBounds(20,20,120,25);
+        view_but.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame f = new JFrame("Books available");
 
+                Connection connection = connect();
+                String sql = "SELECT * FROM MYDB.BOOKS";
+                try {
+                    Statement stmt = connection.createStatement();
+                    stmt.executeUpdate("USE MYDB");
+                    stmt = connection.createStatement();
+                    ResultSet rs = stmt.executeQuery(sql);
+                    JTable book_list = new JTable();
+                    book_list.setModel(DbUtils.resultSetToTableModel(rs));
+                    JScrollPane scrollPane = new JScrollPane(book_list);
+
+                    f.add(book_list);
+                    f.setSize(800,400);
+                    f.setVisible(true);
+                    f.setLocationRelativeTo(null);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex);
+
+                }
+            }
+        });
+        JButton users_but = new JButton("View users");
+        users_but.setBounds(150,20,120,25);
+        users_but.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame f = new JFrame("Users list");
+
+                Connection connection = connect();
+                String sql = "SELECT * FROM MYDB.USERS";
+                try {
+                    Statement stmt = connection.createStatement();
+                    stmt.executeUpdate("USE MYDB");
+                    stmt = connection.createStatement();
+                    ResultSet rs = stmt.executeQuery(sql);
+                    JTable book_list = new JTable();
+                    book_list.setModel(DbUtils.resultSetToTableModel(rs));
+                    JScrollPane scrollPane = new JScrollPane(book_list);
+
+                    f.add(book_list);
+                    f.setSize(800,400);
+                    f.setVisible(true);
+                    f.setLocationRelativeTo(null);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex);
+
+                }
+            }
+        });
+        JButton issued_but = new JButton("View issued books");
+        issued_but.setBounds(280,20,120,25);
+        issued_but.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame f = new JFrame("Issued books");
+
+                Connection connection = connect();
+                String sql = "SELECT * FROM MYDB.ISSUED";
+                try {
+                    Statement stmt = connection.createStatement();
+                    stmt.executeUpdate("USE MYDB");
+                    stmt = connection.createStatement();
+                    ResultSet rs = stmt.executeQuery(sql);
+                    JTable book_list = new JTable();
+                    book_list.setModel(DbUtils.resultSetToTableModel(rs));
+                    JScrollPane scrollPane = new JScrollPane(book_list);
+
+                    f.add(book_list);
+                    f.setSize(800,400);
+                    f.setVisible(true);
+                    f.setLocationRelativeTo(null);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex);
+
+                }
+            }
+        });
+        f.add(view_but);
+        f.add(users_but);
+        f.add(issued_but);
+        f.setSize(800,400);
+        f.setLayout(null);
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
     }
 }
